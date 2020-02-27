@@ -3,7 +3,7 @@ import preset from '@rebass/preset'
 const colors = {
   black: '#1b262c',
   gray: '#2e3440',
-  lightGray: 'eceff4',
+  lightGray: '#eceff4',
   white: '#d8dee9',
   blue: '#0f4c81',
   red: '#ed6663',
@@ -26,18 +26,18 @@ export const theme = {
   fontWeights: {
     body: 400,
     heading: 400,
-    bold: 400,
+    bold: 700,
   },
   buttons: {
     primary: {
-      color: colors.white,
-      backgroundColor: colors.blue,
+      color: colors.black,
+      backgroundColor: colors.red,
       width: '100%',
       p: 3
     },
     secondary: {
-      color: colors.white,
-      backgroundColor: colors.purple,
+      color: colors.black,
+      backgroundColor: colors.orange,
       width: '100%',
       p: 3
     }

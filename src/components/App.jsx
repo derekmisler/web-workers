@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
 import { Normalize } from 'styled-normalize'
 import { Box, Flex } from 'rebass/styled-components'
+import { ThreeBounce } from 'styled-spinkit'
 import { theme } from '../styles/theme'
 import { GlobalStyle } from '../styles/global'
 import { generateData } from '../utils/generateData'
 import { sortListDescending } from '../utils/sort'
 import { sortingWorker } from '../utils/sortingWorker'
 import WebWorker from '../utils/WebWorker'
-import { Ball } from './Ball'
+import { Bounce } from './Bounce'
 import { Buttons } from './Buttons'
 import { Card } from './Card'
 
@@ -56,11 +57,12 @@ const App = () => {
               sortNormally={sortNormally}
               isLoading={isLoading}
             />
+            <ThreeBounce color={isLoading ? '#eceff4' : 'transparent'}/>
             <Box
               sx={{
                 display: 'grid',
                 gridGap: 4,
-                gridTemplateColumns: 'repeat(2, 1fr)'
+                gridTemplateColumns: 'repeat(3, 1fr)'
               }}
             >
               {dataSet.slice(0, 40).map(data => (
@@ -69,7 +71,7 @@ const App = () => {
             </Box>
           </Box>
           <Box width={1 / 3}>
-            <Ball />
+            <Bounce />
           </Box>
         </Flex>
       </ThemeProvider>

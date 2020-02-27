@@ -3,21 +3,19 @@ import { Heading, Text, Box } from 'rebass/styled-components'
 
 export const Card = ({ data, isLoading }) => (
   <Box
-    my={3}
     boxShadow='large'
     border='10px solid'
     borderColor='blue'
+    mx={2}
+    my={3}
   >
-    <Box as='aside' p={3} bg='lightGray'>
+    <Box as='aside' p={3} bg='gray'>
       <Heading fontSize={3}>{data.productName}</Heading>
-      <Text>
-        {data.department}
-        <br />
-        {data.color}
-       </Text>
+      <Text fontWeight='bold'>Dept: {data.department}</Text>
+      <Text>{data.product}</Text>
     </Box>
     <Box as='footer' bg='red' p={3}>
-      <Heading fontSize={3} color='gray'>${data.price}</Heading>
+      <Heading fontSize={3} color='black'>${data.price}</Heading>
     </Box>
   </Box>
 )

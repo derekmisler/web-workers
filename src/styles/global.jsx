@@ -20,10 +20,11 @@ export const GlobalStyle = createGlobalStyle`
   footer, header, menu, nav, section {
     display: block;
   }
-  html { font-size: 16px; }
+  html { font-size: 20px; }
   body {
     background-color: ${({ theme }) => theme.colors.black};
     color: ${({ theme }) => theme.colors.white};
+    font-family: ${({ theme }) => theme.fonts.body};
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
   }
