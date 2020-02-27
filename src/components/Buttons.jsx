@@ -7,7 +7,7 @@ export const Buttons = ({ sortWithWebWorker, sortNormally, isLoading }) => (
     margin='large'
     columns={['1fr', '1fr']}
   >
-    <Button primary label='Sort WITH web worker' disabled={isLoading} onClick={sortWithWebWorker} size='large' />
-    <Button label='Sort WITHOUT web worker' disabled={isLoading} onClick={sortNormally} size='large' />
+    <Button primary label='SLOW' disabled={isLoading} onClick={sortNormally} size='large' color='status-error' />
+    <Button primary label='FAST' disabled={isLoading} onClick={sortWithWebWorker} size='large' color='status-ok' />
   </Grid>
 )

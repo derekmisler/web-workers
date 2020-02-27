@@ -2,24 +2,24 @@ import styled, { keyframes } from 'styled-components'
 
 const bounce = keyframes`
   0% {
-      left: 0;
+    top: 8rem;
   }
   50% {
-      left: calc(100% - 10rem)
+    top: calc(100% - 8rem)
   }
   100% {
-      left: 0;
+    top: 8rem;
   }
 `
 
 export const Ball = styled.div`
-  background: red;
+  background: #A2423D;
   border-radius: 50%;
   position: fixed;
-  top: 22%;
-  left: 0;
-  width: 10rem;
-  height: 10rem;
-  margin-top: -5rem;
+  top: 0;
+  right: 1rem;
+  width: 16rem;
+  height: 16rem;
+  margin-top: -8rem;
   animation: ${bounce} 3s infinite;
 `

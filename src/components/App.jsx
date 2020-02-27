@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Normalize } from 'styled-normalize'
-import { Grommet } from 'grommet'
+import { Grommet, Grid, Box } from 'grommet'
 import { grommet } from 'grommet/themes'
 import { generateUsers } from '../utils/generateUsers'
 import { sortListDescending } from '../utils/sort'
 import { sortingWorker } from '../utils/sortingWorker'
 import WebWorker from '../utils/WebWorker'
 import { Ball } from './Ball'
-import { Body } from './Body'
 import { Buttons } from './Buttons'
-import { Loading } from './Loading'
 import { User } from './User'
 
 const App = () => {
@@ -24,6 +22,10 @@ const App = () => {
     })
   }, [])
 
+  useEffect(() => {
+    setIsLoading(false)
+  }, [users[0]])
+
   const worker = new WebWorker(sortingWorker)
 
   const sortWithWebWorker = () => {
@@ -32,7 +34,6 @@ const App = () => {
     worker.addEventListener('message', event => {
       const sortedList = event.data
       setUsers(sortedList)
-      setIsLoading(false)
     })
   }
 
@@ -40,25 +41,26 @@ const App = () => {
     setIsLoading(true)
     const sortedList = sortListDescending(users)
     setUsers(sortedList)
-    setIsLoading(false)
   }
 
   return (
     <>
       <Normalize />
       <Grommet theme={grommet}>
-        <Body>
-          <Buttons
-            sortWithWebWorker={sortWithWebWorker}
-            sortNormally={sortNormally}
-            isLoading={isLoading}
-          />
-          <Ball />
-          {isLoading && <Loading />}
-          {users.slice(0, 20).map(user => (
-            <User key={user.id} user={user} isLoading={isLoading} />
-          ))}
-        </Body>
+        <Grid gap='large' margin='large' columns={['2fr', '1fr']}>
+          <Box>
+            <Buttons
+              sortWithWebWorker={sortWithWebWorker}
+              sortNormally={sortNormally}
+              isLoading={isLoading}
+            />
+            {users.slice(0, 20).map(user => (
+              <User key={user.id} user={user} isLoading={isLoading} />
+            ))}
+            <Box></Box>
+            <Ball />
+          </Box>
+        </Grid>
       </Grommet>
     </>
   )

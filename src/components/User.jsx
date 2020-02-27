@@ -1,27 +1,27 @@
 import React from 'react'
-import { Box, Header, Footer, Heading, Paragraph } from 'grommet'
+import { Box, Header, Footer, Heading, Text } from 'grommet'
 
-export const User = ({ user }) => (
+export const User = ({ user, isLoading }) => (
   <Box
-    margin={{ vertical: 'medium', horizontal: 'large' }}
+    margin='small'
     elevation='large'
     border={{ color: 'neutral-3', size: 'xlarge' }}
   >
     <Header background='neutral-3' pad='medium'>
       <Heading level={2}>{user.name}</Heading>
     </Header>
-    <Box as='aside' pad='medium' background='dark-2'>
+    <Box as='aside' pad='medium' background={{ color: 'dark-2', opacity: isLoading }}>
       <Heading level={4}>{user.email}</Heading>
-      <Paragraph>
+      <Text>
         {user.address}
         <br />
         {user.citySt}
         <br />
         {user.joinedOn.toString()}
-       </Paragraph>
+       </Text>
     </Box>
     <Footer background='neutral-4' pad='medium'>
-      <Paragraph>{user.commentCount} comments</Paragraph>
+      <Text>{user.commentCount} comments</Text>
     </Footer>
   </Box>
 )
