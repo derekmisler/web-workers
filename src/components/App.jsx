@@ -1,67 +1,78 @@
 import React, { useState, useEffect } from 'react'
+import { ThemeProvider } from 'styled-components'
 import { Normalize } from 'styled-normalize'
-import { Grommet, Grid, Box } from 'grommet'
-import { grommet } from 'grommet/themes'
-import { generateUsers } from '../utils/generateUsers'
+import { Box, Flex } from 'rebass/styled-components'
+import { theme } from '../styles/theme'
+import { GlobalStyle } from '../styles/global'
+import { generateData } from '../utils/generateData'
 import { sortListDescending } from '../utils/sort'
 import { sortingWorker } from '../utils/sortingWorker'
 import WebWorker from '../utils/WebWorker'
 import { Ball } from './Ball'
 import { Buttons } from './Buttons'
-import { User } from './User'
+import { Card } from './Card'
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const [users, setUsers] = useState([])
+  const [dataSet, setDataSet] = useState([])
+  const [firstItem] = dataSet
 
   useEffect(() => {
     setIsLoading(true)
-    generateUsers().then(users => {
-      setUsers(users)
-      setIsLoading(false)
+    generateData().then(dataSet => {
+      setDataSet(dataSet)
     })
   }, [])
 
   useEffect(() => {
     setIsLoading(false)
-  }, [users[0]])
+  }, [firstItem])
 
   const worker = new WebWorker(sortingWorker)
 
   const sortWithWebWorker = () => {
     setIsLoading(true)
-    worker.postMessage(users)
+    worker.postMessage(dataSet)
     worker.addEventListener('message', event => {
-      const sortedList = event.data
-      setUsers(sortedList)
+      setDataSet(event.data)
     })
   }
 
   const sortNormally = () => {
     setIsLoading(true)
-    const sortedList = sortListDescending(users)
-    setUsers(sortedList)
+    const sortedList = sortListDescending(dataSet)
+    setDataSet(sortedList)
   }
 
   return (
     <>
       <Normalize />
-      <Grommet theme={grommet}>
-        <Grid gap='large' margin='large' columns={['2fr', '1fr']}>
-          <Box>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Flex m={3}>
+          <Box width={2 / 3}>
             <Buttons
               sortWithWebWorker={sortWithWebWorker}
               sortNormally={sortNormally}
               isLoading={isLoading}
             />
-            {users.slice(0, 20).map(user => (
-              <User key={user.id} user={user} isLoading={isLoading} />
-            ))}
-            <Box></Box>
+            <Box
+              sx={{
+                display: 'grid',
+                gridGap: 4,
+                gridTemplateColumns: 'repeat(2, 1fr)'
+              }}
+            >
+              {dataSet.slice(0, 40).map(data => (
+                <Card key={data.id} data={data} isLoading={isLoading} />
+              ))}
+            </Box>
+          </Box>
+          <Box width={1 / 3}>
             <Ball />
           </Box>
-        </Grid>
-      </Grommet>
+        </Flex>
+      </ThemeProvider>
     </>
   )
 }
