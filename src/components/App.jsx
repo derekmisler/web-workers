@@ -16,18 +16,14 @@ import { Card } from './Card'
 const App = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [dataSet, setDataSet] = useState([])
-  const [firstItem] = dataSet
 
   useEffect(() => {
     setIsLoading(true)
     generateData().then(dataSet => {
       setDataSet(dataSet)
+      setIsLoading(false)
     })
   }, [])
-
-  useEffect(() => {
-    setIsLoading(false)
-  }, [firstItem])
 
   const worker = new WebWorker(sortingWorker)
 
@@ -36,6 +32,7 @@ const App = () => {
     worker.postMessage(dataSet)
     worker.addEventListener('message', event => {
       setDataSet(event.data)
+      setIsLoading(false)
     })
   }
 
@@ -43,6 +40,7 @@ const App = () => {
     setIsLoading(true)
     const sortedList = sortListDescending(dataSet)
     setDataSet(sortedList)
+    setIsLoading(false)
   }
 
   return (
@@ -62,7 +60,7 @@ const App = () => {
               sx={{
                 display: 'grid',
                 gridGap: 4,
-                gridTemplateColumns: 'repeat(3, 1fr)'
+                gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr) )'
               }}
             >
               {dataSet.slice(0, 40).map(data => (
