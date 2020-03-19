@@ -1,5 +1,5 @@
 {
-  "name": "web-worker-demo",
+  "name": "@derekmisler/web-worker-demo",
   "version": "0.1.0",
   "private": true,
   "scripts": {
